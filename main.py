@@ -1,8 +1,8 @@
-import filehandeler
+import filehandler
 
 configfile = "config"
 
-FH = filehandeler
+FH = filehandler
 UID = FH.filemod(configfile, mode="conf_edit", writedata="1234", arg="uid=")
 
 print(UID)
