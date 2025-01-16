@@ -5,12 +5,12 @@ def file_updater(filename, arg, newvalue):
 
 
     # Find the arg and replace its value
-    
-    pattern = rf"({re.escape(arg)})(True|False)"  # Match arg with current value
+    print(f"Searching for '{arg}' in file '{filename}'")
+    pattern = rf"{re.escape(arg)}\s*=\s*(True|False)"  # Match arg with current value
     updated_content, replacements = re.subn(pattern, rf"\1{newvalue}", content)
-
+    
     if replacements == 0:
-        print(f"arg '{arg}' not found in the file.")
+        print(f"arg '{arg}' not found in '{filename}'.")
     else:
         # Write the updated content back to the file
         with open(filename, 'w') as file:
