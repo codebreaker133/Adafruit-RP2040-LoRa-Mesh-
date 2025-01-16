@@ -1,8 +1,8 @@
-import checkfile
+import filehandeler
 
 configfile = "config"
 
-cf = checkfile
-UID = cf.filemod(configfile, mode="conf_edit", writedata="1234", arg="uid=")
+FH = filehandeler
+UID = FH.filemod(configfile, mode="conf_edit", writedata="1234", arg="uid=")
 
 print(UID)
