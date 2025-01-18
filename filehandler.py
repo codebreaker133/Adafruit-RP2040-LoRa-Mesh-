@@ -2,11 +2,11 @@ import re
 def file_updater(filename, arg, newvalue):
     with open(filename,"r")as file:
         content = file.read()
-
+    print(f"'{filename}' content:\n", repr(content)+"\n")
 
     # Find the arg and replace its value
     print(f"Searching for '{arg}' in file '{filename}'")
-    pattern = rf"{re.escape(arg)}\s*=\s*(True|False)"  # Match arg with current value
+    pattern = rf"{re.escape(arg)}\s*=\s*\"?(\w+)\"?"  # Match arg with current value
     updated_content, replacements = re.subn(pattern, rf"\1{newvalue}", content)
     
     if replacements == 0:
@@ -16,6 +16,7 @@ def file_updater(filename, arg, newvalue):
         with open(filename, 'w') as file:
             file.write(updated_content)
 
+file_updater('config',"uid=","host2")
 
 def filemod(filename, mode, writedata, arg):
     if mode == "readtxt":

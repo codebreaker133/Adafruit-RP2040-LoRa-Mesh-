@@ -1,8 +1,7 @@
-import filehandler
+import configEditor
 
 configfile = "config"
 
-FH = filehandler
-UID = FH.filemod(configfile, mode="conf_edit", writedata="1234", arg="uid=")
-
-print(UID)
+import terminal
+term = terminal
+term.terminal()
