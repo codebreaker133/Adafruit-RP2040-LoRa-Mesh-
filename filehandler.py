@@ -1,24 +1,37 @@
 import re
-def file_updater(filename, arg, newvalue):
+
+
+def file_updater(filename, key, newvalue):
     with open(filename,"r")as file:
         content = file.read()
-    print(f"'{filename}' content:\n", repr(content)+"\n")
 
-    # Find the arg and replace its value
-    print(f"Searching for '{arg}' in file '{filename}'")
-    pattern = rf"{re.escape(arg)}\s*=\s*\"?(\w+)\"?"  # Match arg with current value
-    updated_content, replacements = re.subn(pattern, rf"\1{newvalue}", content)
+    # Find the key and replace its value
+    print(f"Searching for '{key}' in file '{filename}'")
+    pattern = r"" + re.escape(key) + r"\s*=\s*\"?(\w+)\"?"  # Match key with current value
+    updated_content, replacements = re.subn(pattern, r"\1"+newvalue, content)
     
     if replacements == 0:
-        print(f"arg '{arg}' not found in '{filename}'.")
+        print("key "+key+" not found in "+filename+".")
     else:
         # Write the updated content back to the file
         with open(filename, 'w') as file:
             file.write(updated_content)
 
-file_updater('config',"uid=","host2")
 
-def filemod(filename, mode, writedata, arg):
+def configread(filename,key):
+    with open(filename,"r") as file:
+        content = file.read()
+        pattern = re.compile(key+r"=\s?\w*")
+        values = re.search(pattern, content)
+        # print(values.group(0))
+        if values != None:
+            results = re.sub(key+r"=\s?","",values.group(0)) # SYNTAX ERROR needs fixing
+            return results            
+        else:
+            print(f"no values found for{key}")
+
+
+def filemod(filename, mode, writedata, key):
     if mode == "readtxt":
         mode = "rt"
         file = open(filename , mode)
@@ -39,7 +52,7 @@ def filemod(filename, mode, writedata, arg):
         file = open(filename, mode)
         file.write(writedata)
     if mode == "conf_edit":
-        file_updater(filename,arg,writedata)
+        file_updater(filename,key,writedata)
     
 def createfile(filename):
     file = open(filename , "x")
