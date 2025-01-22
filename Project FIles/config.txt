@@ -1,0 +1,10 @@
+============CONFIG for LoRWAN=============
+
+===========requierd values for startup=======
+Node= 1
+freq= 915
+tx_power= full
+==========end of requierd values for startup==
+
+
+active_nodes= 1, 2
