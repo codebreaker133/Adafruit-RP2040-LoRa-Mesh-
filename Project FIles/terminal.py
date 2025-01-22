@@ -26,7 +26,6 @@ def confirmation():
         return False
 
 def terminal(): # terminal logic
-
     prev_command_recognised = True
     Term_open = True
     reconfig = False
@@ -59,7 +58,9 @@ def terminal(): # terminal logic
             
             elif conf == False:
                 Term_open = True
-
+        elif userin =="neo white":
+            import neopx
+            neopx.blink_neo_white()
         else:
             prev_command_recognised = False
             

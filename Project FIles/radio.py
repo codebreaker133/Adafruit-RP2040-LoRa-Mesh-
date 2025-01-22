@@ -22,9 +22,6 @@ def interface_radio(FREQ, NODE, tx_power, ack_dellay, destination_node):
     import radioterminal
     rt = radioterminal
     radioterm = True
-    # if board.BOOT == True:
-    #     import neopx
-    #     neopx.blink_neo_red()
     while radioterm == True:
         radioterm, typeSelect, data = rt.radioterm()
         if typeSelect == "b":
@@ -36,7 +33,7 @@ def interface_radio(FREQ, NODE, tx_power, ack_dellay, destination_node):
                 elif terminal.confirmation() == False:
                     radioterm = True
         if typeSelect == "blink neo" or "ds":
-
+            print("sending blink red over radio")
             Broadcast_send(RFM, data)
     
 

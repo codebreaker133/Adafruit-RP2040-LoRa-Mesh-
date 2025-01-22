@@ -13,23 +13,30 @@ def radioterm(radiot):
             typeSelect = "b" #broadcast
             data = userin
             return radiot, typeSelect, data
+        
         if userin == "direct send":
             userin = input("what do you want to send: ")
             data = userin
             typeSelect = "ds" #direct send
             return radiot, typeSelect, data
-        if userin == "exit":
-            import terminal
-            if terminal.confirmation() == True:
-                radiot = False
-            elif terminal.confirmation() == False:
-                radiot = True
+
         if userin == "blink neo":
             userin = input("what color: ")
             if userin == 'red':
                 data = bytes("blink neo red","utf-8")
                 typeSelect = "blink neo"
                 return radiot, typeSelect, data
+            
+        if userin == "listen for trafic":
+            
+        if userin == "exit":
+            import terminal
+            if terminal.confirmation() == True:
+                radiot = False
+            elif terminal.confirmation() == False:
+                radiot = True
+
+            
 
         
 
