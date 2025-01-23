@@ -35,9 +35,17 @@ def interface_radio(FREQ, NODE, tx_power, ack_dellay, destination_node):
         if typeSelect == "blink neo" or "ds":
             print("sending blink red over radio")
             Broadcast_send(RFM, data)
+        if typeSelect == "listen for trafic":
+            print("listening for trafic from other nodes...")
+            
+
     
 
-
+def listen_for_trafic(RFM, listen):
+    data = RFM.receive()
+    while listen == True:
+        if data is not None:
+            return data
     
 
 

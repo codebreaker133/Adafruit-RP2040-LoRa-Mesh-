@@ -28,7 +28,9 @@ def radioterm(radiot):
                 return radiot, typeSelect, data
             
         if userin == "listen for trafic":
-            
+            data = None
+            return radiot, typeSelect, data
+        
         if userin == "exit":
             import terminal
             if terminal.confirmation() == True:
