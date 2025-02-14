@@ -5,11 +5,11 @@ import time, board, busio, digitalio, adafruit_rfm9x
 def interface_radio(FREQ, NODE, tx_power, ack_dellay, destination_node):
     CS = digitalio.DigitalInOut(board.RFM_CS)
     RESET = digitalio.DigitalInOut(board.RFM_RST)
-
+    
     # Initialize SPI bus.
     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
     # Initialze RFM radio
-    RFM = adafruit_rfm9x.RFM(spi, CS, RESET, FREQ)
+    RFM = adafruit_rfm9x.RFM9x(spi, CS, RESET, int(FREQ))
 
     RFM.node = NODE
     RFM.ack_delay = ack_dellay
@@ -18,7 +18,11 @@ def interface_radio(FREQ, NODE, tx_power, ack_dellay, destination_node):
         RFM.tx_power = 23
     else:
         RFM.tx_power = tx_power
-    RFM.send(bytes("startup message from node {}".format(RFM.node), "UTF-8"))
+    startupMSG = "node "+NODE+" started up"
+    print(startupMSG)
+    RFM.send(
+        bytes(startupMSG, "UTF-8")
+        )
     import radioterminal
     rt = radioterminal
     radioterm = True
@@ -33,10 +37,14 @@ def interface_radio(FREQ, NODE, tx_power, ack_dellay, destination_node):
                 elif terminal.confirmation() == False:
                     radioterm = True
         if typeSelect == "blink neo" or "ds":
-            print("sending blink red over radio")
+            print("sending over radio")
             Broadcast_send(RFM, data)
         if typeSelect == "listen for trafic":
-            print("listening for trafic from other nodes...")
+            paket = True
+            while paket == False:
+                print("listening for trafic from other nodes...")
+                time.sleep(3)
+
             
 
     

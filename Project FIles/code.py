@@ -13,7 +13,7 @@ import terminal
 term = terminal
 Term_open = True
 import board, digitalio
-import Displaydriver1327
+import displaydriver1327
 
 def terminit(Term_open):
     reconfig = False
@@ -26,8 +26,8 @@ def terminit(Term_open):
             NODE, FREQ, tx_power = conedit.varinit()
             printcon(NODE, FREQ, tx_power) 
             
-            Dd = Displaydriver1327
-            Dd.write_to_display("test")
+            Dd = displaydriver1327
+            Dd.write_to_display("reconfigureing...")
         # if boot_button.value:
         #     import neopx
         #     neopx.blink_neo_white()

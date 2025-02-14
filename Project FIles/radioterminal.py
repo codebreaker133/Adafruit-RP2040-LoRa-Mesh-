@@ -10,14 +10,14 @@ def radioterm(radiot):
         userin = input("radio terminal: ")
         if userin == "broadcast":
             userin = input("what do you want to broadcast: ")
-            typeSelect = "b" #broadcast
-            data = userin
+            typeSelect = "b" #broadcast mode
+            data = bytes(userin,"utf-8")
             return radiot, typeSelect, data
         
         if userin == "direct send":
             userin = input("what do you want to send: ")
-            data = userin
-            typeSelect = "ds" #direct send
+            data = bytes(userin,"utf-8")
+            typeSelect = "ds" #direct send mode
             return radiot, typeSelect, data
 
         if userin == "blink neo":

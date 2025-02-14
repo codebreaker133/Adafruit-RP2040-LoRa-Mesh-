@@ -44,7 +44,12 @@ def terminal(): # terminal logic
         elif userin == "radio":
             print("entering radio controll sub-menue... ")
             import radio
-            radio.interface_radio()
+            import configEditor
+            conedit = configEditor
+            NODE, FREQ, tx_power = conedit.varinit()
+            ack_dellay = 0
+            destination_node = 2
+            radio.interface_radio(FREQ, NODE, tx_power, ack_dellay, destination_node)
 
         elif userin == "clear":
             print("\n\n\n\n\n\n\n\n\n\n")
