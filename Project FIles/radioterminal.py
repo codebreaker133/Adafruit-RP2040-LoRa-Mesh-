@@ -5,8 +5,6 @@ def radioterm(radiot):
     print("this interface is used to talk to the radio and isue it comands")
     radiot = True
     while radiot == True:
-        import radio
-        radio.interface_radio()
         userin = input("radio terminal: ")
         if userin == "broadcast":
             userin = input("what do you want to broadcast: ")
