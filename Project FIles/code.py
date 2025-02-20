@@ -19,8 +19,8 @@ def terminit(Term_open):
     reconfig = False
     while Term_open == True:
         Term_open, reconfig = term.terminal()
-        # boot_button = digitalio.digitalinout(board.BOOT)
-        # boot_button.direction = digitalio.Direction.INPUT
+        boot_button = digitalio.digitalinout(board.BOOT)
+        boot_button.switch_to_input(pull=digitalio.Pull.UP)
         if reconfig == True:
             
             NODE, FREQ, tx_power = conedit.varinit()
@@ -28,9 +28,9 @@ def terminit(Term_open):
             
             # Dd = displaydriver1327
             # Dd.write_to_display("reconfigureing...")
-        # if boot_button.value:
-        #     import neopx
-        #     neopx.blink_neo_white()
+        if boot_button.value:
+            import neopx
+            neopx.blink_neo_white()
 
 
 terminit(Term_open) # coment this line out if the terminal is not used, see terminal program for use cases
