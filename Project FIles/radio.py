@@ -28,6 +28,7 @@ def interface_radio(FREQ, NODE, tx_power, ack_dellay, destination_node):
     sent = False
     while radioterm == True:
         radioterm, typeSelect, data = rt.radioterm(radioterm)
+
         if typeSelect == "b":
             counter, sent = Broadcast_send(RFM, data)
             if sent == False:
@@ -36,14 +37,16 @@ def interface_radio(FREQ, NODE, tx_power, ack_dellay, destination_node):
                     counter, sent = Broadcast_send(RFM, data)
                 elif terminal.confirmation() == False:
                     radioterm = True
+
         if typeSelect == "blink neo" or "ds":
             print("sending over radio")
             Broadcast_send(RFM, data)
+
         if typeSelect == "listen for trafic":
             paket = True
             while paket == False:
-                print("listening for trafic from other nodes...")
-                time.sleep(3)
+                listen_for_trafic(RFM, listen=True)
+                
         else:
             break
 
@@ -52,9 +55,11 @@ def interface_radio(FREQ, NODE, tx_power, ack_dellay, destination_node):
     
 
 def listen_for_trafic(RFM, listen):
-    data = RFM.receive()
     while listen == True:
+        data = RFM.receive()
+        print("listening for trafic from other nodes")
         if data is not None:
+            print("data retreved: "+data)
             return data
     
 
