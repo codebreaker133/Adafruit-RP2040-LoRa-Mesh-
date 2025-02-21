@@ -12,4 +12,5 @@ def blink_neo_color(r,g,b):
         led[0] = (r, g, b)
         time.sleep(1)
         led[0] = (0,0,0)
+        led.deinit()
         break
