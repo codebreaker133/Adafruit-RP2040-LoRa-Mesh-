@@ -32,7 +32,7 @@ rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, RADIO_FREQ_MHZ)
 rfm9x.ack_delay = 0.2
 rfm9x.enable_crc = True
 rfm9x.coding_rate = 8
-rfm9x.spreading_factor = 12
+# rfm9x.spreading_factor = 12
 # set node addresses
 rfm9x.node = 1
 rfm9x.destination = 2
