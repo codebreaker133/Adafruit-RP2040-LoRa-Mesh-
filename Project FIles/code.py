@@ -14,8 +14,8 @@ term = terminal
 Term_open = True
 import board, digitalio
 # import displaydriver1327
-import neopx
-neo = neopx
+import neoblink
+neo = neoblink
 neo.blink_neo_color(255, 255, 255)
 # boot_button = digitalio.digitalinout(board.button)
 # boot_button.switch_to_input(pull=digitalio.Pull.UP)
@@ -34,8 +34,8 @@ def terminit(Term_open):
         
         # if boot_button.value ==True:
         #     print("button pressed")
-        #     import neopx
-        #     neopx.blink_neo_color(255,255,255)
+        #     import neoblink
+        #     neoblink.blink_neo_color(255,255,255)
 
 
 terminit(Term_open) # coment this line out if the terminal is not used, see terminal program for use cases
