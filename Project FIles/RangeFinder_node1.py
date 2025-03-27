@@ -29,11 +29,11 @@ spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
 radio = rfm9x.RFM9x(spi, CS, RESET, RADIO_FREQ_MHZ)
 
 # set delay before sending ACK
-radio.ack_delay = 0.3
+radio.ack_delay = 0.5
 radio.enable_crc = True
-# adafruit_rfm9x.coding_rate = 4
-# adafruit_rfm9x.signal_bandwidth = 7.8
-# adafruit_rfm9x.spreading_factor = 12
+radio.coding_rate = 4
+# radio.signal_bandwidth = 31.2
+radio.spreading_factor = 10
 # set node addresses
 radio.node = 1
 radio.destination = 2
@@ -61,7 +61,7 @@ while True:
         # Print out the raw bytes of the packet:
         print("Received (raw header):", [hex(x) for x in packet[0:4]])
         print("Received (raw payload): {0}".format(packet[4:]))
-        print("RSSI: {0}".format(adafruit_rfm9x.last_rssi))
+        print("RSSI: {0}".format(radio.last_rssi))
         neoblink.blink_neo_color(255, 0, 255)
         # send reading after any packet received
     

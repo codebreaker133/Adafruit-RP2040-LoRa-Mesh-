@@ -28,8 +28,8 @@ radio = rfm9x.RFM9x(spi, CS, RESET, RADIO_FREQ_MHZ)
 radio.ack_delay = 0.5
 radio.enable_crc = True
 radio.coding_rate = 4
-radio.signal_bandwidth = 31.2
-radio.spreading_factor = 12
+# radio.signal_bandwidth = 31.2
+radio.spreading_factor = 10
 # set node addresses
 radio.node = 2
 radio.destination = 1
