@@ -25,11 +25,11 @@ from adafruit_rfm import rfm9x
 radio = rfm9x.RFM9x(spi, CS, RESET, RADIO_FREQ_MHZ)
 
 # set delay before transmitting ACK (seconds)
-radio.ack_delay = 0.5
+radio.ack_delay = 0.2
 radio.enable_crc = True
 radio.coding_rate = 4
-# radio.signal_bandwidth = 31.2
-radio.spreading_factor = 10
+# radio.signal_bandwidth = 62.5
+radio.spreading_factor = 9
 # set node addresses
 radio.node = 2
 radio.destination = 1
@@ -43,10 +43,9 @@ neoblink.blink_neo_color(0, 255, 0)
 print("Waiting for packets...")
 while True:
     # Look for a new packet: only accept if addresses to my_node
-    packet = radio.receive_with_ack(with_header=True)
+    packet = radio.receive(with_header=True)
     # If no packet was received during the timeout then None is returned.
     if packet is not None:
-        import neopx
         neoblink.blink_neo_color(255, 255, 255)
         # Received a packet!
         # Print out the raw bytes of the packet:
@@ -57,7 +56,7 @@ while True:
         time.sleep(2)
         counter += 1
         # send a  mesage to destination_node from my_node
-        if not radio.send_with_ack(
+        if not radio.send(
             bytes("response from node {} {}".format(radio.node, counter), "UTF-8")
         ):
             ack_failed_counter += 1
