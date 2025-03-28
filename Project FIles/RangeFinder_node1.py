@@ -12,7 +12,7 @@ import busio # type: ignore
 import digitalio # type: ignore
 # import adafruit_rfm9x #type: ignore
 # set the time interval (seconds) for sending packets
-transmit_interval = 0.2
+transmit_interval = 2.0
 
 # Define radio parameters.
 RADIO_FREQ_MHZ = 915.0  # Frequency of the radio in Mhz. Must match your
@@ -29,11 +29,11 @@ spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
 radio = rfm9x.RFM9x(spi, CS, RESET, RADIO_FREQ_MHZ)
 
 # set delay before sending ACK
-radio.ack_delay = 0.5
+radio.ack_delay = 0.2
 radio.enable_crc = True
 radio.coding_rate = 4
-# radio.signal_bandwidth = 31.2
-radio.spreading_factor = 10
+# radio.signal_bandwidth = 62.5
+radio.spreading_factor = 9
 # set node addresses
 radio.node = 1
 radio.destination = 2
@@ -52,9 +52,7 @@ print("Waiting for packets...")
 time_now = time.monotonic()
 while True:
     # Look for a new packet: only accept if addresses to my_node
-    packet = radio.receive_with_ack(with_header=True)
-    if radio.packet_sent() == True:
-            neoblink.blink_neo_color(0, 0, 255)
+    packet = radio.receive(with_header=True)
     # If no packet was received during the timeout then None is returned.
     if packet is not None:
         # Received a packet!
@@ -71,11 +69,11 @@ while True:
         counter += 1
         # send a  mesage to destination_node from my_node
         neoblink.blink_neo_color(0, 0, 255)
-        if not radio.send_with_ack(
-            bytes("message from node node {} {}".format(radio.node, counter), "UTF-8")
+        if not radio.send(
+            bytes("message from node node {}".format(radio.node), "UTF-8")
         ):
-            ack_failed_counter += 1
-            
-            neoblink.blink_neo_color(255, 000, 000)
-            print(" No Ack: ", counter, ack_failed_counter)
+            print("transmiting")            
+            neoblink.blink_neo_color(000, 000, 255)
+    if radio.packet_sent() == True:
+            neoblink.blink_neo_color(255, 0, 255)
         
