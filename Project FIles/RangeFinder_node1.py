@@ -28,11 +28,9 @@ spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
 # Initialze RFM radio
 radio = rfm9x.RFM9x(spi, CS, RESET, RADIO_FREQ_MHZ)
 
-# set delay before sending ACK
-# radio.ack_delay = 0.2
 radio.enable_crc = True
 radio.coding_rate = 5
-# radio.signal_bandwidth = 62500000
+# radio.signal_bandwidth = 62500
 radio.spreading_factor = 9
 # set node addresses
 radio.node = 1
@@ -68,7 +66,6 @@ while True:
         time_now = time.monotonic()
         counter += 1
         # send a  mesage to destination_node from my_node
-        neoblink.blink_neo_color(0, 0, 255)
         if not radio.send(
             bytes("message from node node {}".format(radio.node), "UTF-8")
         ):
