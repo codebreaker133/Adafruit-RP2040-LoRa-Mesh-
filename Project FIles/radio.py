@@ -3,8 +3,8 @@ import time, board, busio, digitalio, adafruit_rfm9x
 
 
 def interface_radio(FREQ, NODE, tx_power, ack_dellay, destination_node):
-    CS = digitalio.DigitalInOut(board.RFM_CS)
-    RESET = digitalio.DigitalInOut(board.RFM_RST)
+    CS = digitalio.DigitalInOut(board.RFM_CS) #set clock signal reset pin
+    RESET = digitalio.DigitalInOut(board.RFM_RST) #set radio reset pin
     
     # Initialize SPI bus.
     spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
