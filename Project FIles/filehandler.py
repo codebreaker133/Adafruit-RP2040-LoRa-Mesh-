@@ -27,7 +27,7 @@ def configread(filename, key):
             results = re.sub(key+r"=\s?","",values.group(0)) # if key exists read value
             return results            
         else:
-            print(f"no values found for{key}")
+            print(f"no values found for {key}")
 
 
 def filemod(filename, mode, writedata, key):

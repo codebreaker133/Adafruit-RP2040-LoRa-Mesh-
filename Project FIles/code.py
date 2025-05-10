@@ -2,33 +2,29 @@ import configEditor
 
 conedit = configEditor
 print("starting config")
-NODE, FREQ, tx_power = conedit.varinit() #loading initial config values
-def printcon(NODE, FREQ, tx_power):
+NODE, FREQ, tx_power, spread_factor, codeing_rate = conedit.varinit() #loading initial config values
+def printcon(NODE, FREQ, tx_power, spread_factor, codeing_rate):
     print("node= "+NODE)
     print("freq= "+FREQ)
     print("tx_power= "+tx_power)
+    print("spread factor ="+spread_factor)
+    print("coding rate= "+codeing_rate)
 printcon(NODE, FREQ, tx_power)
 
 import terminal
 term = terminal
 Term_open = True
-<<<<<<< Updated upstream
-import board, digitalio
-# import displaydriver1327
+import board, digitalio #type: ignore
+#builtins from adafruit for board lvl control
 import neoblink
 neo = neoblink
-neo.blink_neo_color(255, 255, 255)
+neo.blink_neo_color(0, 255, 0, 0.5)
+
 # boot_button = digitalio.digitalinout(board.button)
 # boot_button.switch_to_input(pull=digitalio.Pull.UP)
-def terminit(Term_open):
-=======
-import board, digitalio #builtins from adafruit for board lvl control
-# import displaydriver1327 #my custon display driver for 128x128 I2C OLED
-import neopx
-neo = neopx
-neo.blink_neo_color(255, 255, 255) # bootup blinks LED white to show startup
+
+neo.blink_neo_color(255, 255, 255, 0.5) # bootup blinks LED white to show startup
 def terminit(Term_open): #defines terminal logic using outputs from main terminal lib
->>>>>>> Stashed changes
     reconfig = False
     while Term_open == True:
         Term_open, reconfig = term.terminal() #call terminal 
@@ -39,19 +35,13 @@ def terminit(Term_open): #defines terminal logic using outputs from main termina
             NODE, FREQ, tx_power = conedit.varinit() # pulls variables from config file
             printcon(NODE, FREQ, tx_power) #prints values to terminal for debug
             
-            # Dd = displaydriver1327
-            # Dd.write_to_display("reconfigureing...")
-<<<<<<< Updated upstream
         
         # if boot_button.value ==True:
         #     print("button pressed")
-        #     import neoblink
         #     neoblink.blink_neo_color(255,255,255)
-=======
->>>>>>> Stashed changes
 
 terminit(Term_open) # coment this line out if the terminal is not used,
                     # see terminal program for use cases
                     # if you disable terminnal make sure you add your own
                     # custom code for tansmition and reception
-                    #feal free to use the libraries in this repo
+                    # feel free to use the libraries in this repo
