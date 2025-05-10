@@ -12,7 +12,7 @@ SPIbus = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO) #data bus for ra
 radio = adafruit_rfm.rfm9x.RFM9X(SPIbus, CS, RESET, RADIO_FREQ_MHZ) #radio initalised
 # radio online, starting paramiter configuration
 radio.crc = True
-radio.bandwidth = 7800 #mesured in Hz
+radio.bandwidth = 7800 # mesured in Hz
 radio.coding_rate = 8 # 5-7
 radio.spread_factor =12 # 7-12, six is valid but needs extra configuration to work
 radio.tx_power = 23 #13-23dB
