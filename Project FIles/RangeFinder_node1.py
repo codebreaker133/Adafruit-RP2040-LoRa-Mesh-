@@ -29,9 +29,9 @@ spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
 radio = rfm9x.RFM9x(spi, CS, RESET, RADIO_FREQ_MHZ)
 
 radio.enable_crc = True
-radio.coding_rate = 5
+radio.coding_rate = 5 # accepted values are 5-8
 # radio.signal_bandwidth = 62500
-radio.spreading_factor = 9
+radio.spreading_factor = 9 # accepted values are 7-12 6 requiers special configuration (not suported here)
 # set node addresses
 radio.node = 1
 radio.destination = 2
