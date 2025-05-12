@@ -46,10 +46,10 @@ def terminal(): # terminal logic
             import radio
             import configEditor
             conedit = configEditor
-            NODE, FREQ, tx_power = conedit.varinit()
+            NODE, FREQ, tx_power, spread_factor, coding_rate, signal_bandwidth = conedit.varinit()
             ack_dellay = 0
             destination_node = 2
-            radio.interface_radio(FREQ, NODE, tx_power, ack_dellay, destination_node)
+            radio.interface_radio(FREQ, NODE, tx_power, ack_dellay, spread_factor, coding_rate, signal_bandwidth)
 
         elif userin == "clear":
             print("\n\n\n\n\n\n\n\n\n\n")
@@ -64,8 +64,8 @@ def terminal(): # terminal logic
             elif conf == False:
                 Term_open = True
         elif userin =="neo white":
-            import neopx
-            neopx.blink_neo_white()
+            import neoblink
+            neoblink.blink_neo_white()
         else:
             prev_command_recognised = False
             

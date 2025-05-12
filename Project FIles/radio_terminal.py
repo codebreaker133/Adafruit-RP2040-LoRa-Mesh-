@@ -30,7 +30,7 @@ def radioterm(radiot):
             return radiot, typeSelect, data
         
         if userin == "exit":
-            import terminal
+            import general_purpose_terminal as terminal
             if terminal.confirmation() == True:
                 radiot = False
             elif terminal.confirmation() == False:

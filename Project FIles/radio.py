@@ -1,19 +1,26 @@
 
-import time, board, busio, digitalio, adafruit_rfm9x
+import time, board, busio, digitalio #type: ignore
+from adaftruit_rfm import rfm9x #type: ignore
 
 
-def interface_radio(FREQ, NODE, tx_power, ack_dellay, destination_node):
+def interface_radio(FREQ, NODE, tx_power, ack_dellay, spread_factor, coding_rate, signal_bandwidth):
     CS = digitalio.DigitalInOut(board.RFM_CS) #set clock signal reset pin
     RESET = digitalio.DigitalInOut(board.RFM_RST) #set radio reset pin
     
     # Initialize SPI bus.
-    spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
+    SPI = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
     # Initialze RFM radio
-    RFM = adafruit_rfm9x.RFM9x(spi, CS, RESET, int(FREQ))
+    RFM = rfm9x.RFM9x(SPI, CS, RESET, int(FREQ))
+    RFM.enable_crc = True
+    RFM.coding_rate = int(coding_rate) # accepted values are 5-8
+    RFM.signal_bandwidth = int(signal_bandwidth)
+    RFM.spreading_factor = int(spread_factor) # accepted values are 7-12 6 is accepted but requiers special configuration (not suported here)
+    # set node addresses
+    RFM.node = 1
+    RFM.destination = 2
 
     RFM.node = int(NODE)
     RFM.ack_delay = int(ack_dellay)
-    RFM.destination = int(destination_node)
     if tx_power == "full":
         RFM.tx_power = 23
     else:
@@ -22,8 +29,7 @@ def interface_radio(FREQ, NODE, tx_power, ack_dellay, destination_node):
         bytes("Startup message from node 1", "UTF-8")
         )
     
-    import radioterminal
-    rt = radioterminal
+    import radio_terminal as rt
     radioterm = True
     sent = False
     while radioterm == True:
@@ -32,7 +38,7 @@ def interface_radio(FREQ, NODE, tx_power, ack_dellay, destination_node):
         if typeSelect == "b":
             counter, sent = Broadcast_send(RFM, data)
             if sent == False:
-                import terminal
+                import general_purpose_terminal as terminal
                 if terminal.confirmation() == True:
                     counter, sent = Broadcast_send(RFM, data)
                 elif terminal.confirmation() == False:
