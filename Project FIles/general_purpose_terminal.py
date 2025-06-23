@@ -2,9 +2,9 @@
 # This program siply acts as a interface to the rest of the program, 
 # you can use it to edit the config or send all types of radio transmitions
 # If you are using hardcoded values to transmit data only with no configuration
-# the terminal is not technicly nessicary
+# the terminal is not technicly nessisary
 
-def inptloop(prev_command_recognised): # terminal interfaceing program
+def inptloop(prev_command_recognised): # terminal interfaceing loop 
 
     if prev_command_recognised == True:
         userin = input("Terminal: ")
@@ -13,7 +13,7 @@ def inptloop(prev_command_recognised): # terminal interfaceing program
         userin = input("Comand not recognised try again: ")
     return userin
 
-def confirmation():
+def confirmation():         #function used for confirmation of commands when needed
 
     confirm = input("are you sure? y or n: ")
     if confirm == "y":
@@ -26,6 +26,7 @@ def confirmation():
         return False
 
 def terminal(): # terminal logic
+    import neoblink as neo
     prev_command_recognised = True
     Term_open = True
     reconfig = False
@@ -47,8 +48,7 @@ def terminal(): # terminal logic
             import configEditor
             conedit = configEditor
             NODE, FREQ, tx_power, spread_factor, coding_rate, signal_bandwidth = conedit.varinit()
-            ack_dellay = 0
-            destination_node = 2
+            ack_dellay = 0.2
             radio.interface_radio(FREQ, NODE, tx_power, ack_dellay, spread_factor, coding_rate, signal_bandwidth)
 
         elif userin == "clear":
@@ -64,8 +64,10 @@ def terminal(): # terminal logic
             elif conf == False:
                 Term_open = True
         elif userin =="neo white":
-            import neoblink
-            neoblink.blink_neo_color(255, 255, 255, 1)
+            
+            neo.blink_neo_color(255, 255, 255, 1)
+        elif userin == "print commands":
+            print("accepted commands are; exit\nclear\nradio\nreload config\nneo white\n")
         else:
             prev_command_recognised = False
             

@@ -1,6 +1,6 @@
 
 import time, board, busio, digitalio #type: ignore
-from adaftruit_rfm import rfm9x #type: ignore
+from adafruit_rfm import rfm9x #type: ignore
 
 
 def interface_radio(FREQ, NODE, tx_power, ack_dellay, spread_factor, coding_rate, signal_bandwidth):
