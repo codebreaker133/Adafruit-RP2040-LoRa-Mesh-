@@ -10,5 +10,5 @@ def varinit(): #returns initial values needed for startup of Radio Module
     tx_power = fm.configread(filename,"tx_power")
     spread_factor = fm.configread(filename,"spread_factor")
     codeing_rate = fm.configread(filename, "coding_rate")
-    signal_bandwidth = fm.configread(filename, "siganl_bandwidth")
+    signal_bandwidth = fm.configread(filename, "signal_bandwidth")
     return NODE, FREQ, tx_power, spread_factor, codeing_rate, signal_bandwidth

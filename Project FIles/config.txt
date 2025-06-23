@@ -4,6 +4,9 @@
 Node= 1
 freq= 915
 tx_power= full
+spread_factor= 6
+coding_rate= 5
+signal_bandwidth= 62500
 ==========end of requierd values for startup==
 
 

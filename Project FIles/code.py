@@ -4,14 +4,14 @@ import general_purpose_terminal as gpterm
 
 print("starting config")
 NODE, FREQ, tx_power, spread_factor, codeing_rate, signal_bandwidth = confedit.varinit() #loading initial config values
-def printconf(NODE, FREQ, tx_power, spread_factor, codeing_rate):
+def printconf(NODE, FREQ, tx_power, spread_factor, codeing_rate, signal_bandwidth):
     print("node= "+NODE)
     print("freq= "+FREQ)
     print("tx_power= "+tx_power)
     print("spread factor ="+spread_factor)
     print("coding rate= "+codeing_rate)
     print("signal bandwidth= "+signal_bandwidth)
-printconf(NODE, FREQ, tx_power)
+printconf(NODE, FREQ, tx_power, spread_factor, codeing_rate, signal_bandwidth)
 
 Term_open = True
 import board, digitalio #type: ignore

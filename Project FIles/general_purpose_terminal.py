@@ -4,7 +4,7 @@
 # If you are using hardcoded values to transmit data only with no configuration
 # the terminal is not technicly nessicary
 
-def inloop(prev_command_recognised): # terminal interfaceing program
+def inptloop(prev_command_recognised): # terminal interfaceing program
 
     if prev_command_recognised == True:
         userin = input("Terminal: ")
@@ -31,7 +31,7 @@ def terminal(): # terminal logic
     reconfig = False
     while Term_open == True:
 
-        userin = inloop(prev_command_recognised)
+        userin = inptloop(prev_command_recognised)
         prev_command_recognised = True
 
         if userin == "reload config":
@@ -65,7 +65,7 @@ def terminal(): # terminal logic
                 Term_open = True
         elif userin =="neo white":
             import neoblink
-            neoblink.blink_neo_white()
+            neoblink.blink_neo_color(255, 255, 255, 1)
         else:
             prev_command_recognised = False
             
