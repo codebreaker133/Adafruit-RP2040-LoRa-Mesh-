@@ -30,23 +30,25 @@ def interface_radio(FREQ, NODE, tx_power, ack_dellay, spread_factor, coding_rate
         )
     
     import radio_terminal as rt
-    radioterm = True
+    radioT = True
     sent = False
+    typeSelect = "none" 
+    data = "none"
     while radioterm == True:
-        radioterm, typeSelect, data = rt.radioterm(radioterm)
+        radioterm, typeSelect, data = rt.radioterm(radioT) 
 
         if typeSelect == "b":
-            counter, sent = Broadcast_send(RFM, data)
+            counter, sent = Broadcast_send(RFM, NODE, data)
             if sent == False:
                 import general_purpose_terminal as terminal
                 if terminal.confirmation() == True:
-                    counter, sent = Broadcast_send(RFM, data)
+                    counter, sent = Broadcast_send(RFM, NODE, data)
                 elif terminal.confirmation() == False:
-                    radioterm = True
+                    radioT = True
 
         if typeSelect == "blink neo" or "ds":
             print("sending over radio")
-            Broadcast_send(RFM, data)
+            Broadcast_send(RFM, NODE, data)
 
         if typeSelect == "listen for trafic":
             paket = True
@@ -65,13 +67,13 @@ def listen_for_trafic(RFM, listen):
         data = RFM.receive()
         print("listening for trafic from other nodes")
         if data is not None:
-            print("data retreved: "+data)
+            print("data retreved: "+data.decode("utf-8"))
             return data
     
 
 
 
-def Broadcast_send(RFM, data):
+def Broadcast_send(RFM, NODE, data):
     time_now = time.monotonic()
     transmit_interval = 5
     counter = 0
@@ -81,12 +83,12 @@ def Broadcast_send(RFM, data):
             time_now = time.monotonic()
             counter += 1
             # send a  mesage to all nodes            
-            if RFM.send(data, keeplisting=False, destination=255, node=1) == True:
-                print(" message sent! counter= "+counter)
+            if RFM.send(data, keeplisting=False, destination=255, node=NODE) == True:
+                print(" message sent! counter= " + str(counter))
                 sent = True
                 return counter, sent
             else:
-                print("message failed to send! counter= "+counter)
+                print("message failed to send! counter= " + str(counter))
                 sent = False
                 return counter, sent
 

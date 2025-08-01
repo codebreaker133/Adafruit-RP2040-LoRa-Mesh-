@@ -1,11 +1,11 @@
 from time import sleep
-import board
-import busio
-import adafruit_ssd1327
-import displayio
-from adafruit_display_text import label
+import board #type: ignore
+import busio #type: ignore
+import adafruit_ssd1327 #type: ignore
+import displayio #type: ignore
+from adafruit_display_text import label #type: ignore
 #from displayio import I2CDisplay as I2CDisplayBus
-import terminalio
+import terminalio #type: ignore
 # Release display resources at the start
 displayio.release_displays()
 

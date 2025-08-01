@@ -40,25 +40,25 @@ def terminal(): # terminal logic
             # RELOAD CONFIG
             print("config relaoded!")
             reconfig = True
-            return reconfig, reconfig
+            return Term_open, reconfig
         
         elif userin == "radio":
             print("entering radio controll sub-menue... ")
             import radio
-            import configEditor
-            conedit = configEditor
-            NODE, FREQ, tx_power, spread_factor, coding_rate, signal_bandwidth = conedit.varinit()
+            import filehandler as filehnd
+            NODE, FREQ, tx_power, spread_factor, coding_rate, signal_bandwidth = filehnd.varinit()
             ack_dellay = 0.2
             radio.interface_radio(FREQ, NODE, tx_power, ack_dellay, spread_factor, coding_rate, signal_bandwidth)
 
         elif userin == "clear":
             print("\n\n\n\n\n\n\n\n\n\n")
-            return reconfig, reconfig
+            return Term_open, reconfig
         
         elif userin == "exit":
             conf = confirmation()
             if conf == True:
                 Term_open = False
+                reconfig = False
                 return Term_open, reconfig
             
             elif conf == False:

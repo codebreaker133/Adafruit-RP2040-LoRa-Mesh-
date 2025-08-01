@@ -4,7 +4,7 @@ def configread(filename, key):
     with open(filename,"r") as file: #open file in read mode
         content = file.read() #read contents 
         pattern = re.compile(key+r"=\s?\w*") #compile search for value after key arg
-        values = re.search(pattern, content) #used comiled search
+        values = re.search(pattern, content) #used compiled search
         if values != None:
             results = re.sub(key+r"=\s?","",values.group(0)) # if key exists read value
             return results            
@@ -12,6 +12,19 @@ def configread(filename, key):
             results = f"error no values found for {key}"
             print(f"no values found for {key}")
             return results
+
+def configreadList(filename, key):
+    with open(filename, "r") as file:
+        content = file.read()
+        pattern = re.compile(rf'^\s*{re.escape(key)}\s*=\s*((?:\d+\s*,\s*)*\d+)\s*$', re.MULTILINE)
+        match = re.search(pattern, content)
+        if match:
+            num_list_str = match.group(1)
+            # Split by comma, strip spaces, convert to int
+            result = [int(num.strip()) for num in num_list_str.split(',')]
+            return result
+        
+
 
 
 def filemod(filename, mode, writedata, key):

@@ -1,16 +1,16 @@
-import configEditor as confedit
+import filehandler as filehnd
 import neoblink as neo
 import general_purpose_terminal as gpterm 
 
-print("starting config")
-NODE, FREQ, tx_power, spread_factor, codeing_rate, signal_bandwidth = confedit.varinit() #loading initial config values
+print("loading current config...")
+NODE, FREQ, tx_power, spread_factor, codeing_rate, signal_bandwidth = filehnd.varinit() #loading initial config values
 def printconf(NODE, FREQ, tx_power, spread_factor, codeing_rate, signal_bandwidth):
-    print("node= "+NODE)
-    print("freq= "+FREQ)
-    print("tx_power= "+tx_power)
-    print("spread factor ="+spread_factor)
-    print("coding rate= "+codeing_rate)
-    print("signal bandwidth= "+signal_bandwidth)
+    print("node; "+NODE)
+    print("freq; "+FREQ)
+    print("tx_power; "+tx_power)
+    print("spread factor; "+spread_factor)
+    print("coding rate; "+codeing_rate)
+    print("signal bandwidth; "+signal_bandwidth)
 printconf(NODE, FREQ, tx_power, spread_factor, codeing_rate, signal_bandwidth)
 
 Term_open = True
@@ -22,12 +22,12 @@ neo.blink_neo_color(255, 255, 255, 0.5) # bootup blinks LED white to show termin
 def terminit(Term_open): #defines terminal logic using outputs from main terminal lib
     reconfig = False
     while Term_open == True:
-        Term_open, reconfig = gpterm.terminal() #call terminal 
+        Term_open, reconfig = gpterm.terminal() # type: ignore #opens terminal 
         
         if reconfig == True:    # if reconfiguation is requiered edit config.txt then use the
                                 # "reload config" command in terminal
             
-            NODE, FREQ, tx_power, spread_factor, codeing_rate, signal_bandwidth = confedit.varinit()  # pulls variables from config file
+            NODE, FREQ, tx_power, spread_factor, codeing_rate, signal_bandwidth = filehnd.varinit()  # pulls variables from config file
             printconf(NODE, FREQ, tx_power, spread_factor, codeing_rate, signal_bandwidth) #prints values to terminal for debug
             
         
