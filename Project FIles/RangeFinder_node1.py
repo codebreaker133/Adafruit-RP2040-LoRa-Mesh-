@@ -1,4 +1,4 @@
-print("Hello World!")
+print("range finder node 1")
 
 # SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
 # SPDX-License-Identifier: MIT
@@ -30,7 +30,7 @@ radio = rfm9x.RFM9x(spi, CS, RESET, RADIO_FREQ_MHZ)
 
 radio.enable_crc = True
 radio.coding_rate = 5 # accepted values are 5-8
-radio.signal_bandwidth = 7800 # See accepted values in picture
+radio.signal_bandwidth = 20800 # See accepted values in picture
 radio.spreading_factor = 9 # accepted values are 7-12, 6 requiers special configuration (not suported here)
 # set node addresses
 radio.node = 1
@@ -39,7 +39,7 @@ radio.destination = 2
 counter = 0
 ack_failed_counter = 0
 radio.tx_power=23
-import neoblink
+import neoblink #type: ignore
 # send startup message from my_node
 neoblink.blink_neo_color(0, 255, 0, 1)
 radio.send_with_ack(bytes("startup message from node {}".format(radio.node), "UTF-8"))
@@ -55,8 +55,6 @@ while True:
     if packet is not None:
         # Received a packet!
         # Print out the raw bytes of the packet:
-        print("Received (raw header):", [hex(x) for x in packet[0:4]])
-        print("Received (raw payload): {0}".format(packet[4:]))
         print("RSSI: {0}".format(radio.last_rssi))
         neoblink.blink_neo_color(255, 0, 255, 1)
         # send reading after any packet received
@@ -66,11 +64,7 @@ while True:
         time_now = time.monotonic()
         counter += 1
         # send a  mesage to destination_node from my_node
-        if not radio.send(
-            bytes("message from node node {}".format(radio.node), "UTF-8")
-        ):
-            print("transmiting")        
-            neoblink.blink_neo_color(000, 000, 255, 1)
-    if radio.packet_sent() == True:
-            neoblink.blink_neo_color(255, 0, 255, 1)
+        print("sending data")
+        radio.send(bytes("message from node node {}".format(radio.node), "UTF-8"))
+        neoblink.blink_neo_color(000, 000, 255, 1)
         

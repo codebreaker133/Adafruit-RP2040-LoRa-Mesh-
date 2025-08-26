@@ -1,13 +1,14 @@
-============CONFIG for LoRWAN=============
 
-===========requierd values for startup=======
+===========required values for startup=======
+
 Node= 1
 freq= 915
 tx_power= full
 spread_factor= 6
 coding_rate= 5
 signal_bandwidth= 62500
-==========end of requierd values for startup==
+
+====end of required values for startup========
 
 
-active_nodes= 1, 2
+active_nodes= 1, 2, 3

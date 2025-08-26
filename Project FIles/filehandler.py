@@ -1,6 +1,6 @@
 import re # import python RegularExpresions (RegEx) module
 
-def configread(filename, key):
+def config_Read(filename, key):
     with open(filename,"r") as file: #open file in read mode
         content = file.read() #read contents 
         pattern = re.compile(key+r"=\s?\w*") #compile search for value after key arg
@@ -13,8 +13,22 @@ def configread(filename, key):
             print(f"no values found for {key}")
             return results
 
+def config_Read_List(filename, key):
+    with open(filename, "r") as file:
+        content = file.read()
+        pattern = re.compile(rf'^\s*{re.escape(key)}\s*=\s*((?:\d+\s*,\s*)*\d+)\s*$', re.MULTILINE)
+        match = re.search(pattern, content)
+        if match:
+            num_list_str = match.group(1)
+            # Split by comma, strip spaces, convert to int
+            result = [int(num.strip()) for num in num_list_str.split(',')]
+            return result
+        else:
+            print(f"no match found with the key: {key}")
+            result = "no match found"
+            return result
 
-def filemod(filename, mode, writedata, key):
+def file_modify(filename, mode, writedata, key):
     if mode == "readtxt":
         mode = "rt"
         file = open(filename, mode)
@@ -35,13 +49,13 @@ def filemod(filename, mode, writedata, key):
         file = open(filename, mode)
         file.write(writedata)
     if mode == "conf_edit":
-        file_updater(filename, key, writedata)
+        key_updater(filename, key, writedata)
     
 def createfile(filename):
     file = open(filename , "x")
     return file
 
-def file_updater(filename, key, newvalue):
+def key_updater(filename, key, newvalue):
     with open(filename,"r")as file: #open file as read
         content = file.read() #read contents of file
 
@@ -61,10 +75,10 @@ def file_updater(filename, key, newvalue):
 def varinit(): #returns initial values needed for startup of Radio Module
 
     filename = "config.txt"
-    NODE = configread(filename,"Node")
-    FREQ = configread(filename,"freq")
-    tx_power = configread(filename,"tx_power")
-    spread_factor = configread(filename,"spread_factor")
-    codeing_rate = configread(filename, "coding_rate")
-    signal_bandwidth = configread(filename, "signal_bandwidth")
+    NODE = config_Read(filename,"Node")
+    FREQ = config_Read(filename,"freq")
+    tx_power = config_Read(filename,"tx_power")
+    spread_factor = config_Read(filename,"spread_factor")
+    codeing_rate = config_Read(filename, "coding_rate")
+    signal_bandwidth = config_Read(filename, "signal_bandwidth")
     return NODE, FREQ, tx_power, spread_factor, codeing_rate, signal_bandwidth

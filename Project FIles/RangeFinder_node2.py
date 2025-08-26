@@ -1,9 +1,5 @@
-# SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
-# SPDX-License-Identifier: MIT
 
-# Example to receive addressed packed with ACK and send a response
-# Author: Jerry Needell
-#
+print("Range Finder Node 2")
 import time
 import board # type: ignore
 import busio # type: ignore
@@ -26,7 +22,7 @@ radio = rfm9x.RFM9x(spi, CS, RESET, RADIO_FREQ_MHZ)
 
 radio.enable_crc = True
 radio.coding_rate = 5 # accepted values are 5-8
-radio.signal_bandwidth = 7800
+radio.signal_bandwidth = 62500
 radio.spreading_factor = 9 # accepted values are 7-12 6 requiers special configuration (not suported here)
 # set node addresses
 radio.node = 2
@@ -35,7 +31,7 @@ radio.destination = 1
 counter = 0
 ack_failed_counter = 0
 radio.tx_power=23
-import neoblink
+import neoblink #type: ignore
 neoblink.blink_neo_color(0, 255, 0, 0.5)
 # Wait to receive packets.
 print("Waiting for packets...")
@@ -47,15 +43,4 @@ while True:
         neoblink.blink_neo_color(255, 255, 255, 0.5)
         # Received a packet!
         # Print out the raw bytes of the packet:
-        print("Received (raw header):", [hex(x) for x in packet[0:4]])
-        print("Received (raw payload): {0}".format(packet[4:]))
         print("RSSI: {0}".format(radio.last_rssi))
-        # send response 2 sec after any packet received
-        time.sleep(2)
-        counter += 1
-        # send a  mesage to destination_node from my_node
-        if not radio.send(
-            bytes("response from node {} {}".format(radio.node, counter), "UTF-8")
-        ):
-            ack_failed_counter += 1
-            print(" No Ack: ", counter, ack_failed_counter)
