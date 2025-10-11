@@ -1,3 +1,4 @@
+
 print("range finder node 1")
 
 # SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
@@ -30,8 +31,10 @@ radio = rfm9x.RFM9x(spi, CS, RESET, RADIO_FREQ_MHZ)
 
 radio.enable_crc = True
 radio.coding_rate = 5 # accepted values are 5-8
-radio.signal_bandwidth = 20800 # See accepted values in picture
-radio.spreading_factor = 9 # accepted values are 7-12, 6 requiers special configuration (not suported here)
+radio.signal_bandwidth = 62500 # See accepted values in picture
+radio.spreading_factor = 12 # accepted values are 7-12, 6 requiers special configuration (not suported here)
+                           # 12 will give slowest troughput but highest range
+                           # 6 is fastest but shortest range
 # set node addresses
 radio.node = 1
 radio.destination = 2
