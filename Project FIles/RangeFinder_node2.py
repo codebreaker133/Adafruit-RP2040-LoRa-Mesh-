@@ -23,7 +23,8 @@ radio = rfm9x.RFM9x(spi, CS, RESET, RADIO_FREQ_MHZ)
 radio.enable_crc = True
 radio.coding_rate = 5 # accepted values are 5-8
 radio.signal_bandwidth = 62500
-radio.spreading_factor = 12 # accepted values are 7-12 6 requiers special configuration (not suported here)
+radio.xmit_timeout = 3 # timeout for transmition time
+radio.spreading_factor = 9 # accepted values are 7-12 6 requiers special configuration (not suported here)
                            # 12 will give slowest troughput but highest range
                            # 6 is fastest but shortest range
 # set node addresses
@@ -39,7 +40,7 @@ neoblink.blink_neo_color(0, 255, 0, 0.5)
 print("Waiting for packets...")
 while True:
     # Look for a new packet: only accept if addresses to my_node
-    packet = radio.receive(with_header=True)
+    packet = radio.receive()
     # If no packet was received during the timeout then None is returned.
     if packet is not None:
         neoblink.blink_neo_color(255, 255, 255, 0.5)
