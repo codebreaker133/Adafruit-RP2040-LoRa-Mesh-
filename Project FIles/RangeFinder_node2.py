@@ -21,10 +21,12 @@ from adafruit_rfm import rfm9x #type: ignore
 radio = rfm9x.RFM9x(spi, CS, RESET, RADIO_FREQ_MHZ)
 
 radio.enable_crc = True
+radio.low_datarate_optimize = True
 radio.coding_rate = 5 # accepted values are 5-8
 radio.signal_bandwidth = 62500
 radio.xmit_timeout = 3 # timeout for transmition time
-radio.spreading_factor = 9 # accepted values are 7-12 6 requiers special configuration (not suported here)
+radio.receive_timeout = 3
+radio.spreading_factor = 12 # accepted values are 7-12 6 requiers special configuration (not suported here)
                            # 12 will give slowest troughput but highest range
                            # 6 is fastest but shortest range
 # set node addresses

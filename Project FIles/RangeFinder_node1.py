@@ -21,12 +21,13 @@ spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
 # Initialze RFM radio
 radio = rfm9x.RFM9x(spi, CS, RESET, RADIO_FREQ_MHZ)
 
-transmit_interval = 2.0
+transmit_interval = 4.0
 radio.enable_crc = True
+radio.low_datarate_optimize = True
 radio.coding_rate = 5 # accepted values are 5-8
-radio.xmit_timeout = 3 # timeout for transmition time
+radio.xmit_timeout = (transmit_interval - 0.25) # timeout for transmition time
 radio.signal_bandwidth = 62500 # See accepted values in picture
-radio.spreading_factor = 9 # accepted values are 7-12, 6 requiers special configuration (not suported here)
+radio.spreading_factor = 12 # accepted values are 7-12, 6 requiers special configuration (not suported here)
                            # 12 will give slowest troughput but highest range
                            # 6 is fastest but shortest range
 # set node addresses
