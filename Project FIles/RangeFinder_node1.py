@@ -1,7 +1,5 @@
 
 print("range finder node 1")
-
-
 import time
 import board # type: ignore
 import busio # type: ignore
@@ -12,20 +10,20 @@ RADIO_FREQ_MHZ = 915.0  # Frequency of the radio in Mhz. Must match your
 # module! Can be a value like 915.0, 433.0, etc.
 
 # Define pins connected to the chip.
-# set GPIO pins as necessary -- this example is for Raspberry Pi
+# set GPIO pins as necessary
 CS = digitalio.DigitalInOut(board.RFM_CS)
 RESET = digitalio.DigitalInOut(board.RFM_RST)
 from adafruit_rfm import rfm9x #type: ignore
 # Initialize SPI bus.
 spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
-# Initialze RFM radio
+# Initialze RFM
 radio = rfm9x.RFM9x(spi, CS, RESET, RADIO_FREQ_MHZ)
 
-transmit_interval = 4.0
+transmit_interval = 4.0 #time bettween transsmissions, also acts as transmission time out
 radio.enable_crc = True
 radio.low_datarate_optimize = True
 radio.coding_rate = 5 # accepted values are 5-8
-radio.xmit_timeout = (transmit_interval - 0.25) # timeout for transmition time
+radio.xmit_timeout = (transmit_interval - 0.25) # timeout for transmition time (changes depending on packet length)
 radio.signal_bandwidth = 62500 # See accepted values in picture
 radio.spreading_factor = 12 # accepted values are 7-12, 6 requiers special configuration (not suported here)
                            # 12 will give slowest troughput but highest range
