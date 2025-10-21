@@ -6,9 +6,7 @@ import busio # type: ignore
 import digitalio # type: ignore
 
 # Define radio parameters.
-RADIO_FREQ_MHZ = 915.0  # Frequency of the radio in Mhz. Must match your
-# module! Can be a value like 915.0, 433.0, etc.
-
+RADIO_FREQ_MHZ = 915.0  # Frequency of the radio in Mhz.
 # Define pins connected to the chip.
 # set GPIO pins as necessary
 CS = digitalio.DigitalInOut(board.RFM_CS)
