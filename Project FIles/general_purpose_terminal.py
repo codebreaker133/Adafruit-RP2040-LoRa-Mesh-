@@ -4,14 +4,6 @@
 # If you are using hardcoded values to transmit data only with no configuration
 # the terminal is not technicly nessisary
 
-def inptloop(prev_command_recognised): # terminal interfaceing loop 
-
-    if prev_command_recognised == True:
-        userin = input("Terminal: ")
-
-    elif prev_command_recognised == False:
-        userin = input("Comand not recognised try again: ")
-    return userin
 
 def confirmation():         #function used for confirmation of commands when needed
 
@@ -30,9 +22,9 @@ def terminal(): # terminal logic
     prev_command_recognised = True
     Term_open = True
     reconfig = False
+
     while Term_open == True:
 
-        userin = inptloop(prev_command_recognised)
         prev_command_recognised = True
 
         if userin == "reload config":
@@ -68,6 +60,13 @@ def terminal(): # terminal logic
             neo.blink_neo_color(255, 255, 255, 1)
         elif userin == "print commands":
             print("accepted commands are; exit\nclear\nradio\nreload config\nneo white\n")
+            
+        # input handleing for terminal
+        if prev_command_recognised == True:
+            userin = input("Terminal: ")
+        elif prev_command_recognised == False:
+            userin = input("Comand not recognised try again: ")
         else:
             prev_command_recognised = False
+        
             
