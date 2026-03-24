@@ -74,7 +74,7 @@ def key_updater(filename, key, newvalue):
 
 def varinit(): #returns initial values needed for startup of Radio Module
 
-    filename = "config.txt"
+    filename = "lib/config.txt"
     NODE = config_Read(filename,"Node")
     FREQ = config_Read(filename,"freq")
     tx_power = config_Read(filename,"tx_power")

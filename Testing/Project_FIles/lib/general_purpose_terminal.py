@@ -4,6 +4,8 @@
 # If you are using hardcoded values to transmit data only with no configuration
 # the terminal is not technicly nessisary
 
+from lib import filehandler as filehnd
+NODE, FREQ, tx_power, spread_factor, codeing_rate, signal_bandwidth = filehnd.varinit()
 
 def confirmation():         #function used for confirmation of commands when needed
 
@@ -16,9 +18,16 @@ def confirmation():         #function used for confirmation of commands when nee
     else:
         print("answer not recognised returning to terminal...")
         return False
+    
+def PrintConfig(NODE, FREQ, tx_power, spread_factor, codeing_rate, signal_bandwidth):
+    print("node; "+NODE)
+    print("freq; "+FREQ)
+    print("tx_power; "+tx_power)
+    print("spread factor; "+spread_factor)
+    print("coding rate; "+codeing_rate)
+    print("signal bandwidth; "+signal_bandwidth)
 
 def terminal(): # terminal logic
-    import neoblink as neo
     prev_command_recognised = True
     Term_open = True
     reconfig = False
@@ -26,22 +35,30 @@ def terminal(): # terminal logic
     while Term_open == True:
 
         prev_command_recognised = True
+        userin = input("Terminal: ")
 
-        if userin == "reload config":
+        if prev_command_recognised == False:
+            userin = input("Comand not recognised try again: ")
+
+        elif userin == "print config":
+            PrintConfig(NODE, FREQ, tx_power, spread_factor, codeing_rate, signal_bandwidth)
+
+        elif userin == "reload config": # if reconfiguation is requiered edit config.txt then use relod config
             print("reloading config...")
-            # RELOAD CONFIG
+            NODE, FREQ, tx_power, spread_factor, codeing_rate, signal_bandwidth = filehnd.varinit()
             print("config relaoded!")
-            reconfig = True
             return Term_open, reconfig
         
         elif userin == "radio":
             print("entering radio controll sub-menue... ")
-            import radio
-            import filehandler as filehnd
-            NODE, FREQ, tx_power, spread_factor, coding_rate, signal_bandwidth = filehnd.varinit()
-            ack_dellay = 0.2
-            radio.interface_radio(FREQ, NODE, tx_power, ack_dellay, spread_factor, coding_rate, signal_bandwidth)
-
+            try:
+                import radio
+                import filehandler as filehnd
+                NODE, FREQ, tx_power, spread_factor, coding_rate, signal_bandwidth = filehnd.varinit()
+                ack_dellay = 0.2
+                radio.interface_radio(FREQ, NODE, tx_power, ack_dellay, spread_factor, coding_rate, signal_bandwidth)
+            except:
+                print("could not import radio")
         elif userin == "clear":
             print("\n\n\n\n\n\n\n\n\n\n")
             return Term_open, reconfig
@@ -55,17 +72,12 @@ def terminal(): # terminal logic
             
             elif conf == False:
                 Term_open = True
-        elif userin =="neo white":
-            
-            neo.blink_neo_color(255, 255, 255, 1)
         elif userin == "print commands":
-            print("accepted commands are; exit\nclear\nradio\nreload config\nneo white\n")
+            print("accepted commands are; exit\nclear\nradio\nreload config\n")
             
         # input handleing for terminal
-        if prev_command_recognised == True:
+        elif prev_command_recognised == True:
             userin = input("Terminal: ")
-        elif prev_command_recognised == False:
-            userin = input("Comand not recognised try again: ")
         else:
             prev_command_recognised = False
         
