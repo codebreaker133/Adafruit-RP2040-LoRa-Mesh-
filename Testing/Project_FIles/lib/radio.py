@@ -51,9 +51,10 @@ def interface_radio(FREQ, NODE, tx_power, ack_dellay, spread_factor, coding_rate
             Broadcast_send(RFM, NODE, data)
 
         if typeSelect == "listen for trafic":
-            paket = True
+            paket = False
             while paket == False:
-                listen_for_trafic(RFM, listen=True)
+                packet, data = listen_for_trafic(RFM, listen=True)
+
                 
         else:
             break
@@ -68,7 +69,9 @@ def listen_for_trafic(RFM, listen):
         print("listening for trafic from other nodes")
         if data is not None:
             print("data retreved: "+data.decode("utf-8"))
-            return data
+            packet = True
+            return packet, data
+            
     
 
 

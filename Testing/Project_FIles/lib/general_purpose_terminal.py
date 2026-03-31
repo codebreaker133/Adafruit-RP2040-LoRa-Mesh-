@@ -4,9 +4,6 @@
 # If you are using hardcoded values to transmit data only with no configuration
 # the terminal is not technicly nessisary
 
-from lib import filehandler as filehnd
-NODE, FREQ, tx_power, spread_factor, codeing_rate, signal_bandwidth = filehnd.varinit()
-
 def confirmation():         #function used for confirmation of commands when needed
 
     confirm = input("are you sure? y or n: ")
@@ -30,8 +27,8 @@ def PrintConfig(NODE, FREQ, tx_power, spread_factor, codeing_rate, signal_bandwi
 def terminal(): # terminal logic
     prev_command_recognised = True
     Term_open = True
-    reconfig = False
 
+    from lib import filehandler as filehnd
     while Term_open == True:
 
         prev_command_recognised = True
@@ -41,13 +38,14 @@ def terminal(): # terminal logic
             userin = input("Comand not recognised try again: ")
 
         elif userin == "print config":
+            NODE, FREQ, tx_power, spread_factor, codeing_rate, signal_bandwidth = filehnd.varinit()
             PrintConfig(NODE, FREQ, tx_power, spread_factor, codeing_rate, signal_bandwidth)
 
         elif userin == "reload config": # if reconfiguation is requiered edit config.txt then use relod config
             print("reloading config...")
             NODE, FREQ, tx_power, spread_factor, codeing_rate, signal_bandwidth = filehnd.varinit()
             print("config relaoded!")
-            return Term_open, reconfig
+            return Term_open
         
         elif userin == "radio":
             print("entering radio controll sub-menue... ")
@@ -61,14 +59,13 @@ def terminal(): # terminal logic
                 print("could not import radio")
         elif userin == "clear":
             print("\n\n\n\n\n\n\n\n\n\n")
-            return Term_open, reconfig
+            return Term_open
         
         elif userin == "exit":
             conf = confirmation()
             if conf == True:
                 Term_open = False
-                reconfig = False
-                return Term_open, reconfig
+                return Term_open
             
             elif conf == False:
                 Term_open = True

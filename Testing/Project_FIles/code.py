@@ -1,4 +1,4 @@
-
+error = None
 try:
     from lib import filehandler as filehnd
     from lib import general_purpose_terminal as gpterm 
@@ -7,7 +7,7 @@ except:
     print(error)
     raise Exception(error)
 try:
-    import neoblink as neo
+    from lib import neoblink as neo
 except:
     error = "failed to initialize neoblink module, LED disabled"
     print(error)

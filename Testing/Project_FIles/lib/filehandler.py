@@ -7,7 +7,7 @@ def config_Read(filename, key):
         values = re.search(pattern, content) #used comiled search
         if values != None:
             results = re.sub(key+r"=\s?","",values.group(0)) # if key exists read value
-            return results            
+            return results
         else:
             results = f"error no values found for {key}"
             print(f"no values found for {key}")
@@ -74,7 +74,7 @@ def key_updater(filename, key, newvalue):
 
 def varinit(): #returns initial values needed for startup of Radio Module
 
-    filename = "lib/config.txt"
+    filename = "Testing/Project_FIles/lib/config.txt"
     NODE = config_Read(filename,"Node")
     FREQ = config_Read(filename,"freq")
     tx_power = config_Read(filename,"tx_power")
